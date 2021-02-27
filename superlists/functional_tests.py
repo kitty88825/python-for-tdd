@@ -25,7 +25,7 @@ class NewVisitorTest(unittest.TestCase):
         # 他馬上受邀輸入一個待辦事項
         inputbox = self.browser.find_element_by_id('id_new_item')
         self.assertEqual(
-            inputbox.get_attrobute('placeholder'),
+            inputbox.get_attribute('placeholder'),
             'Enter a to-do item',
         )
 
