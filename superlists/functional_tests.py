@@ -6,6 +6,7 @@ from selenium import webdriver
 class NewVisitorTest(unittest.TestCase):
     def setUp(self):  # 測試前執行
         self.browser = webdriver.Firefox(executable_path='/tmp/geckodriver')
+        self.browser.implicitly_wait(3)
 
     def tearDown(self):  # 測試後執行
         self.browser.quit()
