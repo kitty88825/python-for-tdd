@@ -13,6 +13,11 @@ class NewVisitorTest(unittest.TestCase):
     def tearDown(self):  # 測試後執行
         self.browser.quit()
 
+    def check_for_row_in_list_table(self, row_text):
+        table = self.browser.find_element_by_id('id_list_table')
+        rows = table.find_elements_by_tag_name('tr')
+        self.assertIn(row_text, [row.text for row in rows])
+
     def test_can_start_a_list_and_retrieve_it_later(self):
         # Edith 聽到一個很酷的新線上待辦事項app
         # 他去查看他的首頁
@@ -37,10 +42,8 @@ class NewVisitorTest(unittest.TestCase):
         # "1: 購買孔雀羽毛"，一個待辦事項清單項目
         inputbox.send_keys(Keys.ENTER)
         time.sleep(1)
+        self.check_for_row_in_list_table('1: Buy peacock feathers')
 
-        table = self.browser.find_element_by_id('id_list_table')
-        rows = table.find_elements_by_tag_name('tr')
-        self.assertIn('1: Buy peacock feathers', [row.text for row in rows])
         # 此時仍然有一個文字方塊，讓他可以加入另一個項目
         # 他輸入 "使用孔雀羽毛來製作一隻蒼蠅" (Edith 非常有條理)
         inputbox = self.browser.find_element_by_id('id_new_item')
@@ -49,13 +52,11 @@ class NewVisitorTest(unittest.TestCase):
         time.sleep(1)
 
         # 網頁再次更新，現在他的清單有這兩個項目
-        table = self.browser.find_element_by_id('id_list_table')
-        rows = table.find_elements_by_tag_name('tr')
-        self.assertIn('1: Buy peacock feathers', [row.text for row in rows])
-        self.assertIn(
+        self.check_for_row_in_list_table('1: Buy peacock feathers')
+        self.check_for_row_in_list_table(
             '2: Use peacock feathers to make a fly',
-            [row.text for row in rows],
         )
+
         # Edith 不知道網站能否記得他的清單
         # 接著他看到網站產生一個唯一的 URL 給他
         # 網頁有一些文字說明這個效果
