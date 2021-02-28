@@ -1,5 +1,3 @@
-from django.http import HttpRequest
-from django.template.loader import render_to_string
 from django.test import TestCase
 from django.urls import resolve
 
@@ -28,7 +26,7 @@ class HomePageTest(TestCase):
         self.assertEqual(response['location'], '/')
 
     def test_home_page_only_saves_items_when_necessary(self):
-        request = self.client.get('/')
+        self.client.get('/')
         self.assertEqual(Item.objects.count(), 0)
 
     def test_home_page_displays_all_list_items(self):
@@ -37,6 +35,7 @@ class HomePageTest(TestCase):
         response = self.client.get('/')
         self.assertIn('itemey 1', response.content.decode())
         self.assertIn('itemey 2', response.content.decode())
+
 
 class ItemModelTest(TestCase):
     def test_saving_and_retrieving_items(self):
