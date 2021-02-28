@@ -1,3 +1,4 @@
+import time
 import unittest
 
 from selenium import webdriver
@@ -35,6 +36,7 @@ class NewVisitorTest(unittest.TestCase):
         # 當他按下 enter 時，網頁會更新，現在網頁列出
         # "1: 購買孔雀羽毛"，一個待辦事項清單項目
         inputbox.send_keys(Keys.ENTER)
+        time.sleep(1)
 
         table = self.browser.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
