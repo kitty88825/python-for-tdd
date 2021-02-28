@@ -80,3 +80,35 @@ class NewVisitorTest(LiveServerTestCase):
         # She notices that her list has a unique URL
         edith_list_url = self.browser.current_url
         self.assertRegex(edith_list_url, '/lists/.+')
+
+        # 在新的使用者 Framcis 來到網站
+
+        # * 我們使用一個新的瀏覽器工作階段來確保
+        # * Edith 的任何資訊都不會被 cookies 等機制送出
+        self.browser.quit()
+        self.browser = webdriver.Firefox(executable_path='/tmp/geckodriver')
+
+        # Francis 造訪首頁。沒有任何 Edith 的清單的跡象
+        self.browser.get(self.live_server_url)
+        page_text = self.browser.find_element_by_tag_name('body').text
+        self.assertNotIn('Buy peacock feathers', page_text)
+        self.assertNotIn('make a fly', page_text)
+
+        # Francis 輸入一個新的項目，做出一個新的清單
+        # 他比 Edith 無趣...
+        inputbox = self.browser.find_element_by_id('id_new_item')
+        inputbox.send_keys('Buy milk')
+        inputbox.send_keys(Keys.ENTER)
+        self.wait_for_row_in_list_table('1: Buy milk')
+
+        # Francis 取得他自己的獨一無二 URL
+        francis_list_url = self.browser.current_url
+        self.assertRegex(francis_list_url, '/list/.+')
+        self.assertNotEqual(francis_list_url, edith_list_url)
+
+        # 同樣的，沒有 Edith 的清單的任何跡象
+        page_text = self.browser.find_element_by_tag_name('body').text
+        self.assertNotIn('Buy peacock feathers', page_text)
+        self.assertIn('Buy milk', page_text)
+
+        # Satisfied, they both go back to sleep
