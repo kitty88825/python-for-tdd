@@ -103,7 +103,7 @@ class NewVisitorTest(LiveServerTestCase):
 
         # Francis 取得他自己的獨一無二 URL
         francis_list_url = self.browser.current_url
-        self.assertRegex(francis_list_url, '/list/.+')
+        self.assertRegex(francis_list_url, '/lists/.+')
         self.assertNotEqual(francis_list_url, edith_list_url)
 
         # 同樣的，沒有 Edith 的清單的任何跡象
