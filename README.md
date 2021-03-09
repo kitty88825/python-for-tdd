@@ -25,6 +25,13 @@ sudo apt-get update; sudo apt-get install --no-install-recommends make build-ess
 pyenv install 3.8.5
 ```
 
+## Pipenv 設定
+* 設定 `.venv` 建立在專案目錄中
+* modify `.bashrc`
+```
+export PIPENV_VENV_IN_PROJECT=true
+```
+
 ## Nginx 虛擬主機的設定
 * see nginx.template.conf
 * replace SITENAME with e.g., staging.my-domain.com
@@ -40,6 +47,7 @@ sites/
 └── SITENAME
     ├── Pipfile
     ├── Pipfile.lock
+    ├── .venv
     └── src
         ├── core
         ├── database
