@@ -1,7 +1,8 @@
 from selenium import webdriver
+from selenium.webdriver.edge.service import Service
 from webdriver_manager.microsoft import EdgeChromiumDriverManager
 
-browser = webdriver.Edge(EdgeChromiumDriverManager().install())
+browser = webdriver.Edge(service=Service(EdgeChromiumDriverManager().install()))
 
 # Edith has heard about a cool new online to-do app. She goes
 # to check out its homepage
