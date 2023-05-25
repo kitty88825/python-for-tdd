@@ -43,10 +43,10 @@ class NewVisitorTest(unittest.TestCase):
         time.sleep(1)
 
         table = self.browser.find_element(By.ID, 'id_list_table')
-        rows = table.find_element(By.TAG_NAME, 'tr')
+        rows = table.find_elements(By.TAG_NAME, 'tr')
         self.assertTrue(
             any(row.text == '1: Buy peacock feathers' for row in rows),
-            "New to-do item did not appear in table",
+            f'New to-do item did not appear in table. Contents were:\n{table.text}',
         )
 
         # There is still a text box inviting her to add another item. She
