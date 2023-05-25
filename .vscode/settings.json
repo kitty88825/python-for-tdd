@@ -1,0 +1,24 @@
+{
+  // Python settings
+  "python.linting.pylintEnabled": true,
+  "python.linting.pycodestyleEnabled": false,
+  "python.linting.flake8Enabled": true,
+  "python.linting.pydocstyleEnabled": true,
+  "python.formatting.provider": "black",
+  // 儲存自動修正
+  "editor.formatOnSave": false,
+  "python.languageServer": "Pylance",
+  "[python]": {
+    "editor.tabSize": 4,
+    "editor.rulers": [120]
+  },
+  "cSpell.words": ["objs"],
+  // 手動隱藏檔案
+  "files.exclude": {
+    "**/__pycache__": true,
+    "**/.pytest_cache": true
+  },
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true
+  },
+}
