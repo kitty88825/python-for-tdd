@@ -30,7 +30,7 @@ class HomePageTest(TestCase):
 
 
 class ItemModelTest(TestCase):
-    def test_saving_and_retrieving_itmes(self):
+    def test_saving_and_retrieving_items(self):
         first_item = Item()
         first_item.text = 'The first (ever) list item'
         first_item.save()
