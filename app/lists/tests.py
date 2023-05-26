@@ -1,8 +1,6 @@
 from django.test import TestCase
-from django.urls import resolve
 
 from app.lists.models import Item
-from app.lists.views import home_page
 
 
 class HomePageTest(TestCase):
