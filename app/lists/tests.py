@@ -39,14 +39,14 @@ class ItemModelTest(TestCase):
 class ListViewTest(TestCase):
 
     def test_uses_list_template(self):
-        response = self.client.get('/lists/the-only-list-in-the-world/')
+        response = self.client.get('/lists/the-only-list-in-the-world')
         self.assertTemplateUsed(response, 'list.html')
 
     def test_displays_all_items(self) -> None:
         Item.objects.create(text='itemey 1')
         Item.objects.create(text='itemey 2')
 
-        response = self.client.get('/lists/the-only-list-in-the-world/')
+        response = self.client.get('/lists/the-only-list-in-the-world')
 
         self.assertContains(response, 'itemey 1')
         self.assertContains(response, 'itemey 2')
@@ -63,4 +63,4 @@ class NewListTest(TestCase):
 
     def test_redirects_after_POST(self) -> None:
         response = self.client.post('/lists/new', data={'item_text': 'A new list item'})
-        self.assertRedirects(response, '/lists/the-only-list-in-the-world/')
+        self.assertRedirects(response, '/lists/the-only-list-in-the-world')
