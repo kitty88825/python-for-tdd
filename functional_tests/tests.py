@@ -1,3 +1,4 @@
+import os
 import time
 
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
@@ -15,6 +16,8 @@ class NewVisitorTest(StaticLiveServerTestCase):
     def setUp(self) -> None:
         super().setUp()
         self.browser = webdriver.Edge(service=Service(EdgeChromiumDriverManager().install()))
+        if staging_server := os.environ.get('STAGING_SERVER'):
+            self.live_server_url = 'http://' + staging_server
 
     def tearDown(self) -> None:
         self.browser.quit()
