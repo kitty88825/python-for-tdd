@@ -12,16 +12,31 @@ eg, on Debian:
 
     sudo apt-get update
     sudo apt-get upgrade
+    sudo apt install nginx
 
 ## Nginx Virtual Host config
 
 * see nginx.template.conf
 * replace DOMAIN with, e.g., staging.my-domain.com
 
+    ```
+    export SITENAME=superlists-staging.ottg.eu
+    sudo systemctl start nginx
+    sudo ln -s /etc/nginx/sites-available/$SITENAME $SITENAME
+    readlink -f $SITENAME
+    sudo systemctl reload nginx
+    ```
+
 ## Systemd service
 
 * see gunicorn-systemd.template.service
 * replace DOMAIN with, e.g., staging.my-domain.com
+
+    ```
+    vim /etc/systemd/system/gunicorn-$SITENAME.service
+    sudo systemctl daemon-reload
+    sudo systemctl enable gunicorn-$SITENAME
+    sudo systemctl start gunicorn-$SITENAME
 
 ## poetry venv setting
 
