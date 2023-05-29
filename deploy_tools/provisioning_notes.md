@@ -23,6 +23,14 @@ eg, on Debian:
 * see gunicorn-systemd.template.service
 * replace DOMAIN with, e.g., staging.my-domain.com
 
+## poetry venv setting
+
+* Create the virtualenv inside the project’s root directory.
+
+    ```
+    poetry config virtualenvs.in-project true
+    ```
+
 ## Folder structure
 
 Assume we have a user account at /home/username
