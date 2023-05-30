@@ -1,6 +1,6 @@
 import time
 
-from django.test import LiveServerTestCase, TestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.common.by import By
@@ -10,7 +10,8 @@ from webdriver_manager.microsoft import EdgeChromiumDriverManager
 
 MAX_WAIT = 10
 
-class NewVisitorTest(LiveServerTestCase):
+
+class NewVisitorTest(StaticLiveServerTestCase):
     def setUp(self) -> None:
         super().setUp()
         self.browser = webdriver.Edge(service=Service(EdgeChromiumDriverManager().install()))
@@ -114,3 +115,27 @@ class NewVisitorTest(LiveServerTestCase):
         self.assertIn('Buy milk', page_text)
 
         # Satisfied, they both go back to sleep
+
+    def test_layout_and_styling(self) -> None:
+        # Edith goes to the home page
+        self.browser.get(self.live_server_url)
+        self.browser.set_window_size(1024, 768)
+
+        # She notices the input box is nicely centered
+        input_box = self.browser.find_element(By.ID, 'id_new_item')
+        self.assertAlmostEqual(
+            input_box.location['x'] + input_box.size['width'] / 2,
+            512,
+            delta=10
+        )
+        # She starts a new list and sees the input is nicely
+        # centered there too
+        input_box.send_keys('testing')
+        input_box.send_keys(Keys.ENTER)
+        self.wait_for_row_in_list_table('1: testing')
+        input_box = self.browser.find_element(By.ID, 'id_new_item')
+        self.assertAlmostEqual(
+            input_box.location['x'] + input_box.size['width'] / 2,
+            512,
+            delta=10
+        )
