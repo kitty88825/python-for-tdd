@@ -10,6 +10,7 @@ packages = [{include = "python_tdd"}]
 python = "^3.11"
 selenium = "^4.9.1"
 webdriver-manager = "^3.8.6"
+django = "^4.2.1"
 
 
 [build-system]
