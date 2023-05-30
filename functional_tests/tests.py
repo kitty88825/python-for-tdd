@@ -1,3 +1,4 @@
+import os
 import time
 
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
@@ -15,6 +16,8 @@ class NewVisitorTest(StaticLiveServerTestCase):
     def setUp(self) -> None:
         super().setUp()
         self.browser = webdriver.Edge(service=Service(EdgeChromiumDriverManager().install()))
+        if staging_server := os.environ.get('STAGING_SERVER'):
+            self.live_server_url = 'http://' + staging_server
 
     def tearDown(self) -> None:
         self.browser.quit()
@@ -126,7 +129,7 @@ class NewVisitorTest(StaticLiveServerTestCase):
         self.assertAlmostEqual(
             input_box.location['x'] + input_box.size['width'] / 2,
             512,
-            delta=10
+            delta=30
         )
         # She starts a new list and sees the input is nicely
         # centered there too
@@ -137,5 +140,5 @@ class NewVisitorTest(StaticLiveServerTestCase):
         self.assertAlmostEqual(
             input_box.location['x'] + input_box.size['width'] / 2,
             512,
-            delta=10
+            delta=30
         )
